@@ -3,23 +3,26 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+use Doctrine\ORM\Mapping\MappedSuperclass;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
+ * 
+ * @MappedSuperclass
+ * @Entity
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="discr", type="string")
+ * @DiscriminatorMap({"userSys" = "UserSys", "userParte" = "UserParte"})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ApiResource(
- * collectionOperations={
- *         "get",
- *         "post"={"security"="is_granted('ROLE_SupAdmin','ROLE_Admin')" , "security_message"="Acces non Autorisé"}
- *     },
- *     itemOperations={
- *         "get",
- *         "put"={"security"="is_granted('ROLE_SupAdmin','ROLE_Admin') ","security_message"="Acces non Autorisé"},
- *     })
+ * 
  */
-class User implements AdvancedUserInterface
+abstract class User implements AdvancedUserInterface
 {
     /**
      * @ORM\Id()

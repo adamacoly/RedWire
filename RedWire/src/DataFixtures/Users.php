@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\UserSys;
 use App\Repository\RoleRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -22,7 +23,7 @@ class Users extends Fixture
     public function load(ObjectManager $manager)
     {
 
-        $user = new User();
+        $user = new UserSys();
         $role=$this->rep->findOneBy(["libelle"=>"SupAdmin"]);
         $user->setProfil($role)
         ->setRoles(["ROLE_".$role->getLibelle()])
